@@ -40,6 +40,7 @@ public class Container{
                 log.error("任务执行控制器未初始化");
                 return;
             }
+            log.info("任务执行控制器初始化成功");
             synchronized (blockerLock){
                 for (; ; ) {
                     if (queue.isEmpty()) {

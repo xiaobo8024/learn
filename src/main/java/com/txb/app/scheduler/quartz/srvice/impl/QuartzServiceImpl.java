@@ -34,11 +34,11 @@ public class QuartzServiceImpl implements IQuartzJobService {
      */
     @PostConstruct
     public void init() throws Exception {
-//        scheduler.clear();
-//        List<QuartzJob> jobList = quartzMapper.selectJobAll();
-//        for (QuartzJob job : jobList) {
-//            ScheduleUtils.createScheduleJob(scheduler, job);
-//        }
+        scheduler.clear();
+        List<QuartzJob> jobList = quartzMapper.selectJobAll();
+        for (QuartzJob job : jobList) {
+            ScheduleUtils.createScheduleJob(scheduler, job);
+        }
     }
 
     /**
@@ -47,94 +47,88 @@ public class QuartzServiceImpl implements IQuartzJobService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insertJob(QuartzJob job) throws Exception {
-//        // 先将任务设置为暂停状态
-//        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
-//        int rows = quartzMapper.insert(job);
-//        if (rows > 0) {
-//            ScheduleUtils.createScheduleJob(scheduler, job);
-//        }
-//        return rows;
-        return 0;
+        // 先将任务设置为暂停状态
+        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+        int rows = quartzMapper.insert(job);
+        if (rows > 0) {
+            ScheduleUtils.createScheduleJob(scheduler, job);
+        }
+        return rows;
     }
 
     @Override
     public void run(QuartzJob job) throws SchedulerException {
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        QuartzJob properties = quartzMapper.selectJobById(job.getJobId());
-//        // 参数
-//        JobDataMap dataMap = new JobDataMap();
-//        dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
-//        scheduler.triggerJob(ScheduleUtils.getJobKey(jobId, jobGroup), dataMap);
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        QuartzJob properties = quartzMapper.selectJobById(job.getJobId());
+        // 参数
+        JobDataMap dataMap = new JobDataMap();
+        dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
+        scheduler.triggerJob(ScheduleUtils.getJobKey(jobId, jobGroup), dataMap);
     }
 
 
     @Override
     public int pauseJob(QuartzJob job) throws SchedulerException {
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
-//        int rows = quartzMapper.updateById(job);
-//        if (rows > 0) {
-//            scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
-//        }
-//        return rows;
-        return 0;
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        job.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+        int rows = quartzMapper.updateById(job);
+        if (rows > 0) {
+            scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+        }
+        return rows;
     }
 
     @Override
     public int resumeJob(QuartzJob job) throws SchedulerException {
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
-//        int rows = quartzMapper.updateById(job);
-//        if (rows > 0) {
-//            scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
-//        }
-//        return rows;
-        return 0;
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        job.setStatus(ScheduleConstants.Status.NORMAL.getValue());
+        int rows = quartzMapper.updateById(job);
+        if (rows > 0) {
+            scheduler.resumeJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+        }
+        return rows;
     }
 
     @Override
     public int deleteJob(QuartzJob job) throws SchedulerException {
-//        Long jobId = job.getJobId();
-//        String jobGroup = job.getJobGroup();
-//        int rows = quartzMapper.deleteJobById(jobId);
-//        if (rows > 0) {
-//            scheduler.deleteJob(ScheduleUtils.getJobKey(jobId, jobGroup));
-//        }
-//        return rows;
-        return 0;
+        Long jobId = job.getJobId();
+        String jobGroup = job.getJobGroup();
+        int rows = quartzMapper.deleteJobById(jobId);
+        if (rows > 0) {
+            scheduler.deleteJob(ScheduleUtils.getJobKey(jobId, jobGroup));
+        }
+        return rows;
     }
 
     @Override
     public int changeStatus(Long jobId, String status) throws SchedulerException {
-//        int rows = quartzMapper.changeStatus(jobId, status);
-//        if (rows == 0) {
-//            return rows;
-//        }
-//        //更新成功，需要改调度器内任务的状态
-//        //拿到整个任务
-//        QuartzJob job = quartzMapper.selectJobById(jobId);
-//        //根据状态来启动或者关闭
-//        if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
-//            rows = resumeJob(job);
-//        } else if (ScheduleConstants.Status.PAUSE.getValue().equals(status)) {
-//            rows = pauseJob(job);
-//        }
-//        return rows;
-        return 0;
+        int rows = quartzMapper.changeStatus(jobId, status);
+        if (rows == 0) {
+            return rows;
+        }
+        //更新成功，需要改调度器内任务的状态
+        //拿到整个任务
+        QuartzJob job = quartzMapper.selectJobById(jobId);
+        //根据状态来启动或者关闭
+        if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
+            rows = resumeJob(job);
+        } else if (ScheduleConstants.Status.PAUSE.getValue().equals(status)) {
+            rows = pauseJob(job);
+        }
+        return rows;
     }
 
     @Override
     public int updateJob(QuartzJob job) throws Exception {
-//        QuartzJob properties = quartzMapper.selectJobById(job.getJobId());
-//        int rows = quartzMapper.updateById(job);
-//        if (rows > 0) {
-//            updateSchedulerJob(job, properties.getJobGroup());
-//        }
-//        return rows;
-        return 0;
+        QuartzJob properties = quartzMapper.selectJobById(job.getJobId());
+        int rows = quartzMapper.updateById(job);
+        if (rows > 0) {
+            updateSchedulerJob(job, properties.getJobGroup());
+        }
+        return rows;
     }
 
     public void updateSchedulerJob(QuartzJob job, String jobGroup) throws Exception {
