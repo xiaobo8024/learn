@@ -1,0 +1,42 @@
+server:
+  port: 9527
+spring:
+  datasource:
+    druid:
+      url: jdbc:oracle:thin:@10.6.133.11:1521/orcl
+      username: TBS_FRAUD
+      password: TBS_FRAUD
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 5000
+        wall:
+          config:
+            multi-statement-allow: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        login-username: admin
+        login-password: admin
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml  # 指定MyBatis Mapper XML文件的位置
+  type-aliases-package: com.txb.app.domain.entity  # 指定别名包路径，简化实体类的引用
+  global-config:
+    db-config:
+      id-type: auto  # 设置主键策略
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 设置日志实现，输出到控制台
