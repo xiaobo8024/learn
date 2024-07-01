@@ -1,0 +1,86 @@
+--创建用户： 
+create user TBS_FRAUD identified by TBS_FRAUD;
+--授予用户登录数据库的权限： 
+grant create session to TBS_FRAUD;
+
+ --授予用户操作表空间的权限：
+ 
+grant unlimited tablespace to TBS_FRAUD;
+grant create tablespace to TBS_FRAUD;
+grant alter tablespace to TBS_FRAUD;
+grant drop tablespace to TBS_FRAUD;
+grant manage tablespace to TBS_FRAUD;
+
+ --授予用户操作表的权限：
+ 
+grant create table to TBS_FRAUD; --(包含有create index权限, alter table, drop table权限)
+
+-- 授予用户操作视图的权限:
+grant create view to TBS_FRAUD;-- (包含有alter view, drop view权限)
+
+ --授予用户操作触发器的权限：
+grant create trigger to TBS_FRAUD; --(包含有alter trigger, drop trigger权限)
+
+-- 授予用户操作存储过程的权限：
+grant create procedure to TBS_FRAUD;--(包含有alter procedure, drop procedure 和function 以及 package权限)
+
+ --授予用户操作序列的权限：
+grant create sequence to TBS_FRAUD; --(包含有创建、修改、删除以及选择序列)
+
+ --授予用户回退段权限：
+grant create rollback segment to TBS_FRAUD;
+grant alter rollback segment to TBS_FRAUD;
+grant drop rollback segment to TBS_FRAUD;
+
+ --授予用户同义词权限：
+grant create synonym to TBS_FRAUD;--(包含drop synonym权限)
+grant create public synonym to TBS_FRAUD;
+grant drop public synonym to TBS_FRAUD;
+
+ --授予用户关于用户的权限：
+grant create user to TBS_FRAUD;
+grant alter user to TBS_FRAUD;
+grant become user to TBS_FRAUD;
+grant drop user to TBS_FRAUD;
+
+ --授予用户关于角色的权限：
+grant create role to TBS_FRAUD;
+
+
+
+ --授予用户操作概要文件的权限
+grant create profile to TBS_FRAUD;
+grant alter profile to TBS_FRAUD;
+grant drop profile to TBS_FRAUD;
+--允许创建dbLink权限
+GRANT CREATE public DATABASE LINK TO TBS_FRAUD
+ --允许从sys用户所拥有的数据字典表中进行选择
+grant select any dictionary to TBS_FRAUD;
+
+--job权限
+grant create job to zxin_jzfp;
+
+
+grant manage scheduler to zxin_jzfp;
+
+授权成功。
+
+ grant update any table to zxin_jzfp;
+
+授权成功。
+
+ grant select  any table to zxin_jzfp;
+
+授权成功。
+
+ grant create any table to zxin_jzfp;
+
+授权成功。
+
+grant create any procedure to zxin_jzfp;
+
+授权成功。
+
+测试存过权限
+
+grant DEBUG CONNECT SESSION to FXQ
